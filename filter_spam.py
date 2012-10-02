@@ -140,7 +140,3 @@ def test():
 	return f.judge_email(s)
 
 print test()
-
-
-# explictly save function
-# instance stuff
