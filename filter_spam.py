@@ -9,7 +9,7 @@ class SpamFilter():
 
 	def __init__ (self, filepath=None):
 		"""
-		Initilizes SpamFilter. Takes an optional filepath argument to load a dictionary probabilties.
+		Initilizes SpamFilter. Takes an optional filepath argument to load a dictionary of probabilties.
 		"""	
 		self.data = {
 			'spam':{},
