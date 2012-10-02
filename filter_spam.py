@@ -7,7 +7,10 @@ import re
 class SpamFilter():
 	TOKEN_PATTERN = re.compile(r"[^A-Za-z\-'\$]+")
 
-	def __init__ (self, load=None):
+	def __init__ (self, filepath=None):
+		"""
+		Initilizes SpamFilter. Takes an optional filepath argument to load a dictionary probabilties.
+		"""	
 		self.data = {
 			'spam':{},
 			'ham':{},
@@ -16,8 +19,8 @@ class SpamFilter():
 			'num_ham': 0
 		}
 
-		if load:
-			self.load_dicts(load)
+		if filepath:
+			self.load_dicts(filepath)
 		else:
 			self.build_dicts()
 
