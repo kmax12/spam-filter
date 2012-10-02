@@ -33,9 +33,10 @@ class SpamFilter():
 
 	def tokenizer(self, str):
 		"""
-		Takes a string and returns a list of tokens 
+		Takes a string and returns a list of lowercase tokens
 		"""
-		return self.TOKEN_PATTERN.split(str)
+		tokens = self.TOKEN_PATTERN.split(str)
+		return [token.lower() for token in tokens]
 
 
 	def count_tokens(self, email_type, tokens):
@@ -48,8 +49,7 @@ class SpamFilter():
 			if token.isdigit():
 				continue
 
-			token = token.lower()
-			d[token] = d.get(t, 0) + 1
+			d[token] = d.get(token, 0) + 1
 
 
 	def read_emails(self, email_type):
@@ -114,7 +114,7 @@ class SpamFilter():
 		"""
 		tokens = self.tokenizer(str)
 		dedup_tokens = list(set(tokens)) # condense to only unique tokens
-		top = sorted(dedup_tokens, key = lambda x : -abs(self.data['probs'].get(x, .4)-.5))[:15] # 15 highest prob tokens
+		top = sorted(dedup_tokens, key = lambda x : -abs(self.data['probs'].get(x, .4)-.5))[:15] # 15 most interesting tokens
 
 		probs = []
 		for token in top:
@@ -123,12 +123,11 @@ class SpamFilter():
 
 		
 		isSpam = 1
-		notSpam = 1
+		isNotSpam = 1
 		for prob in probs:
-			print prob
 			isSpam *= prob
-			notSpam *= (1-prob)
-		return isSpam/(isSpam+notSpam)
+			isNotSpam *= (1-prob)
+		return isSpam/(isSpam+isNotSpam)
 
 
 def test():
