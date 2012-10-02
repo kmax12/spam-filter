@@ -114,7 +114,7 @@ class SpamFilter():
 		"""
 		tokens = self.tokenizer(str)
 		dedup_tokens = list(set(tokens)) # condense to only unique tokens
-		top = sorted(dedup_tokens, key = lambda x : -self.data['probs'].get(x, 0))[:15] # 15 highest prob tokens
+		top = sorted(dedup_tokens, key = lambda x : -abs(self.data['probs'].get(x, .4)-.5))[:15] # 15 highest prob tokens
 
 		probs = []
 		for token in top:
