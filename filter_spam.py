@@ -5,20 +5,22 @@ import re
 
 
 class SpamFilter():
-
-	data = {
-		'spam':{},
-		'ham':{},
-		'probs':{},
-		'num_spam': 0,
-		'num_ham': 0
-	}
-
 	TOKEN_PATTERN = re.compile(r"[^A-Za-z\-'\$]+")
 
 	def __init__ (self, load=None):
+		self.data = {
+			'spam':{},
+			'ham':{},
+			'probs':{},
+			'num_spam': 0,
+			'num_ham': 0
+		}
+
 		if load:
 			self.load_dicts(load)
+		else:
+			self.build_dicts()
+
 
 	def load_dicts(self, file_name):
 		"""
